@@ -1,0 +1,51 @@
+name: Build AD Join Tool EXE
+
+on:
+  push:
+    branches: [ main, master ]
+    tags:
+      - 'join-v*'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Build AD Join Tool EXE
+      run: |
+        pyinstaller --onefile --windowed --name "domain-join-tool" join.py
+    
+    - name: Rename EXE
+      run: |
+        move dist\domain-join-tool.exe dist\domain-join-tool-windows.exe
+    
+    - name: Upload EXE artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: domain-join-tool-windows
+        path: dist/domain-join-tool-windows.exe
+    
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/join-v')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: dist/domain-join-tool-windows.exe
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
