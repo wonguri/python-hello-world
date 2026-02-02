@@ -3,6 +3,8 @@ name: Build Windows EXE
 on:
   push:
     branches: [ main, master ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
@@ -26,10 +28,24 @@ jobs:
     
     - name: Build EXE with PyInstaller
       run: |
-        pyinstaller --onefile --windowed --name "암호초기화" test.py
+        pyinstaller --onefile --windowed --name "password-reset" test.py
+    
+    - name: Rename EXE
+      run: |
+        move dist\password-reset.exe dist\password-reset-windows.exe
     
     - name: Upload EXE artifact
       uses: actions/upload-artifact@v3
       with:
-        name: password-reset-exe
-        path: dist/암호초기화.exe
+        name: password-reset-windows
+        path: dist/password-reset-windows.exe
+    
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/password-reset-windows.exe
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
