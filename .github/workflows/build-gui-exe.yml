@@ -24,7 +24,7 @@ jobs:
     
     - name: Build GUI EXE
       run: |
-        pyinstaller --onefile --windowed --name "HelloWorldGUI" gui_app.py
+        pyinstaller --onefile --windowed --noupx --name "HelloWorldGUI" gui_app.py
     
     - name: Upload GUI EXE
       uses: actions/upload-artifact@v4
@@ -34,7 +34,7 @@ jobs:
     
     - name: Build Console EXE
       run: |
-        pyinstaller --onefile test.py
+        pyinstaller --onefile --noupx test.py
     
     - name: Upload Console EXE
       uses: actions/upload-artifact@v4
