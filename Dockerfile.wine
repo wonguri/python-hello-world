@@ -1,0 +1,17 @@
+# Wine을 사용해 Windows .exe 파일을 실행하는 Docker 이미지
+FROM ubuntu:22.04
+
+# Wine 설치
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    wine64 \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# .exe 파일 복사 (다운로드 후 여기에 넣으세요)
+# COPY test.exe .
+
+# Windows 프로그램 실행
+CMD ["/bin/bash"]

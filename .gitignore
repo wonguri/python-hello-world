@@ -27,15 +27,28 @@ ENV/
 env/
 
 # PyInstaller
+*.manifest
 *.spec
-
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
 
 # IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+.DS_Store
+
+# Project specific
+portable_windows/
+*.zip
+*.exe
+
+# Temporary files
+*.log
+*.tmp
+python-*.exe
+.wine/
+
+# Build artifacts
+build/
+dist/

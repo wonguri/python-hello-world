@@ -1,124 +1,129 @@
-# 🐍 Python Hello World - GUI & Console Applications
+# 🔐 암호 초기화 프로그램
 
-Python으로 만든 간단한 애플리케이션 모음입니다.
+Windows Active Directory 사용자를 위한 OTP 기반 셀프 암호 초기화 도구
 
-## 📦 포함된 프로그램
+## ✨ 주요 기능
 
-### 1. **test.py** - 콘솔 프로그램
-간단한 "Hello, World!" 출력 프로그램
+- 🔑 **OTP 이메일 인증**: 안전한 2단계 인증
+- 📧 **Gmail SMTP 연동**: 자동 OTP 발송
+- 🔌 **Active Directory 통합**: LDAP를 통한 암호 변경
+- 🖥️ **GUI 인터페이스**: 사용하기 쉬운 Tkinter 기반 UI
+- 🚀 **독립 실행**: Python 설치 불필요
 
-### 2. **gui_app.py** - GUI 프로그램
-Tkinter로 만든 대화형 GUI 애플리케이션
-- 이름 입력 및 인사 기능
-- 모던한 버튼 디자인
-- Windows/macOS/Linux 호환
+## 📦 다운로드 및 설치
 
----
+### 방법 1: Portable 패키지 (권장)
 
-## 🚀 실행 방법
+1. [Releases](../../releases)에서 `portable_windows.zip` 다운로드
+2. Windows PC에 압축 해제
+3. `run.bat` 실행
+4. 완료!
 
-### Python으로 직접 실행
+### 방법 2: 단일 EXE 파일
+
+1. Windows PC에서 빌드:
+   ```cmd
+   python -m venv .venv
+   .venv\Scripts\activate
+   pip install -r requirements.txt
+   build_exe.bat
+   ```
+2. `dist/암호초기화.exe` 실행
+
+## 🔧 기술 스택
+
+- **언어**: Python 3.11
+- **GUI**: Tkinter
+- **이메일**: smtplib
+- **LDAP**: ldap3
+- **빌드**: PyInstaller
+
+## 🖼️ 스크린샷
+
+프로그램 실행 화면:
+- Windows 계정 ID 입력
+- 회사 이메일로 OTP 수신
+- 새 암호 설정
+
+## ⚙️ 설정
+
+`test.py` 파일에서 다음 항목을 수정하세요:
+
+```python
+# 이메일 설정
+MAIL_FROM = "your-email@gmail.com"
+MAIL_PASSWORD = "your-app-password"
+MAIL_TO = "recipient@example.com"
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+
+# LDAP 설정
+LDAP_SERVER = "192.168.0.231"
+LDAP_DOMAIN = "yourdomain.local"
+LDAP_USER = "domain\\administrator"
+LDAP_PASSWORD = "your-password"
+LDAP_BASE_DN = "dc=yourdomain,dc=local"
+```
+
+## 📋 시스템 요구사항
+
+- Windows 7/8/10/11 (64bit)
+- 인터넷 연결 (OTP 발송 시)
+- Active Directory 접근 권한
+
+## 🚀 빌드 방법
+
+### Windows에서 EXE 빌드
+
+```cmd
+# 가상환경 생성
+python -m venv .venv
+.venv\Scripts\activate
+
+# 패키지 설치
+pip install -r requirements.txt
+
+# 빌드 실행
+build_exe.bat
+```
+
+### macOS에서 Portable 패키지 생성
+
 ```bash
-# 가상환경 활성화
-source .venv/bin/activate
-
-# 콘솔 프로그램
-python test.py
-
-# GUI 프로그램
-python gui_app.py
+./create_portable_windows.sh
 ```
 
-### 실행 파일 다운로드 (Windows)
-GitHub의 [Actions](https://github.com/wonguri/python-hello-world/actions) 탭에서:
-- `console-windows-exe.zip` - 콘솔 버전
-- `gui-windows-exe.zip` - GUI 버전
+## 📖 문서
 
----
+- [QUICK_START.md](QUICK_START.md) - 빠른 시작 가이드
+- [WINDOWS_BUILD_INSTRUCTIONS.md](WINDOWS_BUILD_INSTRUCTIONS.md) - Windows 빌드 상세 가이드
+- [README_FINAL.md](README_FINAL.md) - 종합 가이드
 
-## ⚠️ Windows 보안 경고 해결
+## 🔒 보안
 
-Windows에서 실행 시 "Windows의 PC 보호" 경고가 나타날 수 있습니다.
+- 암호는 `*`로 마스킹되어 표시
+- LDAP SSL/TLS 연결 지원
+- Gmail SMTP SSL 사용
+- 6자리 랜덤 OTP 생성
 
-### 안전하게 실행하는 방법:
+## ⚠️ 주의사항
 
-**방법 1:**
-1. 경고 창에서 **"추가 정보"** 클릭
-2. **"실행"** 버튼 클릭
+- Gmail 앱 비밀번호 사용 필요 (2단계 인증 활성화 시)
+- Active Directory 관리자 권한 필요
+- 백신 프로그램이 EXE를 차단할 수 있음 (예외 처리 필요)
 
-**방법 2:**
-1. `.exe` 파일 우클릭 → **속성**
-2. **일반** 탭 → **차단 해제** 체크
-3. **확인** 클릭 후 실행
+## 🤝 기여
 
-### 왜 이런 경고가 나타나나요?
-
-이 프로그램은 개인 개발자가 만든 무료 오픈소스 프로그램입니다.
-코드 서명 인증서($200~300/년)가 없어 Windows에서 자동으로 경고를 표시합니다.
-
-**이 프로그램은 100% 안전합니다:**
-- ✅ 모든 소스 코드가 GitHub에 공개되어 있습니다
-- ✅ 악성코드나 바이러스가 없습니다
-- ✅ 개인정보를 수집하지 않습니다
-- ✅ 인터넷 연결이 필요하지 않습니다
-
-더 자세한 내용은 [CODE-SIGNING-GUIDE.md](CODE-SIGNING-GUIDE.md)를 참고하세요.
-
----
-
-## 🛠️ 개발 환경
-
-- **Python**: 3.11+
-- **GUI Framework**: Tkinter (Python 기본 내장)
-- **Build Tool**: PyInstaller
-- **CI/CD**: GitHub Actions
-
----
-
-## 📁 프로젝트 구조
-
-```
-project1/
-├── test.py              # 콘솔 프로그램
-├── gui_app.py           # GUI 프로그램
-├── .venv/               # Python 가상환경
-├── dist/                # 빌드된 실행 파일
-├── .github/workflows/   # GitHub Actions 자동 빌드
-├── README.md            # 이 파일
-└── CODE-SIGNING-GUIDE.md # 보안 경고 해결 가이드
-```
-
----
-
-## 🌐 크로스 플랫폼 지원
-
-| 플랫폼 | 콘솔 | GUI | 실행 파일 |
-|--------|------|-----|----------|
-| Windows | ✅ | ✅ | ✅ .exe |
-| macOS | ✅ | ✅ | ✅ .app |
-| Linux | ✅ | ✅ | ✅ binary |
-
----
+버그 리포트 및 기능 제안은 [Issues](../../issues)에서 환영합니다!
 
 ## 📄 라이선스
 
-MIT License - 자유롭게 사용, 수정, 배포 가능합니다.
+MIT License
+
+## 👨‍💻 개발
+
+원본 PowerShell 스크립트를 Python으로 변환하여 크로스 플랫폼 지원
 
 ---
 
-## 🤝 기여하기
-
-이슈나 Pull Request는 언제나 환영합니다!
-
-1. Fork this repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
----
-
-## 📞 문의
-
-- GitHub: [@wonguri](https://github.com/wonguri)
-- Repository: [python-hello-world](https://github.com/wonguri/python-hello-world)
+**Made with ❤️ for IT Admins**
